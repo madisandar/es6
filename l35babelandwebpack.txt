@@ -1,0 +1,86 @@
+=>Babel
+
+mkdir toolbabel
+cd toolbabel
+
+
+node -v
+npm -v
+
+
+npm init    (or)    npm init --yes
+
+https://babeljs.io/  >  Docs > Using Guide  > Overview > npm
+npm install --save-dev @babel/core @babel/cli @babel/preset-env 
+                @babel/core mean all the logic of transpile
+                @babel/cli mean bable command line interface
+                @babel/preset-env  mean new every new features in update              
+
+
+
+
+create file index.js
+create folder output
+
+
+ "scripts": {
+     "build":"babel index.js -o output/index.js",
+     "watch":"babel index.js -o output/index.js --watch"
+  }
+
+
+ "babel":{
+    "presets": ["@babel/preset-env"]
+  }
+
+
+------------------------------
+
+
+=>Webpack
+
+https://webpack.js.org/ > Documentation > Guides > Installation >  Global Installation
+
+For Windows = npm install --global webpack
+FOR Linux = sudo npm install --global webpack
+
+webpack --help
+webpack -v  (or)  webpack --version
+
+create folder toolwebpack
+create subfolder src
+
+
+=>Terminal
+CLI for webpack must be installed.
+    webpack-cli (https://github.com/webpack/webpack-cli)
+
+sudo npm install --save-dev webpack-cli
+
+
+webpack --help
+webpack -v  (or)    webpack -version
+
+
+cd toolwebpack
+webpack-cli init
+
+
+Which of the following JS solutions do you want to use? = ES6
+Do you want to use webpack-dev-server? = n
+Do you want to simplify the creation of HTML files for your bundle? = n
+Do you want to add PWA support? = no
+Which of the following CSS solutions do you want to use?  = none
+Do you like to install prettier to format generated configuration? = y
+Pick a package manager: = npm
+// do not overwrite : n
+// do not overwrite : n
+
+
+npm run build
+
+
+import {Phone} from "./phone.js" or impor {Phone} from "./phone";
+
+------------------------------------
+

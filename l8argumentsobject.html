@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Arguments Object</title>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+           
+           //  Arguments Object
+
+            // Note : arguments Object can't set in arrow function
+
+           function getname(first,last){
+              console.log(first,last);
+           };
+
+           getname("aung","kyaw"); //aung kyaw
+
+
+
+           function getfullname(first,last){
+                console.log(arguments); //Arguments(2) ['aung', 'kyaw', callee: ƒ, Symbol(Symbol.iterator): ƒ]
+                console.log(typeof arguments); //object
+                console.log(arguments[0]); //aung
+                console.log(arguments[1]); //kyaw
+           }
+
+
+           getfullname("aung","kyaw");
+ 
+           function getcountry(){
+              console.log(arguments);
+              console.log(arguments[0]);
+           }
+
+           getcountry();
+           getcountry('Thailand');
+           
+
+
+        //  Error
+        //   const getcity = ()=>{
+        //     console.log(arguments);
+        //   };
+
+        //   getcity();  //Uncaught ReferenceError: arguments is not defined
+        //   getcity("Indonesia"); //Uncaught ReferenceError: arguments is not defined
+
+           
+          function getnumber(){
+
+            //  console.log(arguments); //Arguments(5) [10, 20, 30, 40, 50, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+             
+              let result = 0;
+             for(const val of arguments){
+                //  console.log(val);
+
+                result += val;
+             }
+
+             return result;
+          }
+
+          console.log(getnumber(10,20,30,40,50)); //150
+
+          
+          const amounts = [10,20,30,40,50];
+
+          function totalresult(){
+
+            //   console.log(arguments);
+               
+               let total = 0;
+
+               for(let x=0; x<arguments.length; x++){
+                   total += arguments[x];
+               }
+
+               return total;
+          }
+
+
+          
+          console.log(totalresult(10,20,30,40,50)); //150
+          console.log(totalresult(...[10,20,30,40,50])); //150
+          console.log(totalresult(...amounts)); //150
+
+
+         //  Error
+         //  function sumresult(){
+         //       let sum = arguments.reduce((total,curr)=>(total += curr),0);
+         //       return sum;
+         //  }
+
+         //  console.log(sumresult(10,20,30,40,50));
+
+          function sumresult(){
+               let sum = Array.from(arguments);
+               let result = sum.reduce((total,curr)=>(total += curr),0);
+               return result;
+          }
+
+          console.log(sumresult(10,20,30,40,50));
+
+
+
+        </script>
+
+
+
+    </body>
+</html>
+
+
+<!-- 24AO -->

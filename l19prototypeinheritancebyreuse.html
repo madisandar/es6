@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calling the Super Constructor</title>
+    </head>
+    <body>
+
+
+        <script type="text/javascript">
+
+            function Vehicle(color){
+                this.color = color;
+            }
+
+            Vehicle.prototype.vancar = function(){
+                return "this is vancar";
+            }
+
+            function Bike(brand,colour){
+                Vehicle.call(this,colour); //red 
+                this.brand = brand;
+            }
+
+
+            function Boat(brand){
+                this.brand = brand;
+            }
+
+           
+            // =>Style 1
+            // Bike.prototype = Object.create(Vehicle.prototype);
+            // Bike.prototype.constructor = Bike;
+
+            // =>Style 2
+            function extend(Parent,Child){
+                Child.prototype = Object.create(Parent.prototype);
+                Child.prototype.constructor = Child;
+            }
+
+            extend(Vehicle,Bike);
+            extend(Vehicle,Boat);
+
+            // ***** Note  : must extend prototype member after inheritance
+            Bike.prototype.ebike = function(){
+                return "this is ebike";
+            }
+
+            const vehicleobj = new Vehicle("black");
+            const bikeobj  = new Bike("marin","red");
+            const boatobj = new Boat("searay");
+            
+            console.log(vehicleobj);
+            console.log(vehicleobj.color); //black
+            console.log(vehicleobj.vancar()); //this is vancar
+
+
+            console.log(bikeobj); //Bike {brand: 'marin', color: 'red'}
+            console.log(bikeobj.brand); //marin
+            console.log(bikeobj.ebike()); //this is ebike
+
+            // console.log(bikeobj.color); //undefined
+
+            console.log(bikeobj.vancar()); //this is vancar
+            // console.log(bikeobj.colour); //undefined
+            console.log(bikeobj.color); //red
+
+            console.log(boatobj); //Boat {brand: 'searay'}
+            console.log(boatobj.brand);  //searay
+            console.log(boatobj.vancar()); //this is vancar
+          
+        </script>
+
+    </body>
+</html>
+

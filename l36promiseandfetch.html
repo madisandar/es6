@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Promise</title>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+            
+            
+            const promise = new Promise((resolve,reject)=>{
+                // resolve();
+                reject();
+            });
+
+            // console.log(promise);
+
+            // promise.then(()=>{
+            //     console.log("Finally Finished");
+            // }).then(()=>{
+            //     console.log("I was also run");
+            // }).then(()=>{
+            //     console.log("I still running");
+            // });
+
+            promise.then(()=>console.log("Finally finished"))
+                    .then(()=>console.log("I was also run"))
+                    .then(()=>console.log("I still running"))
+                    .catch(()=>console.log("I catched you!"));
+
+            
+
+        </script>
+
+
+    </body>
+</html>
+
+
+<!-- 
+=> Promise (States) 
+    (i) unresolved  (waiting for something to finish)
+    (ii) resolved   (something finished and it all OK)
+    (iii) reject    (something finished but want bad)
+-->
+
+
+<!--
+Promise -> Request -> status (Resolved) -> Callback then
+Promise -> Request -> status (Rejected) -> Callback (catch)
+-->

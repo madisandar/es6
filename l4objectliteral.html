@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Object Literal</title>
+    </head>
+    <body>
+
+        
+
+        <script type="text/javascript">
+            // =>Object
+            
+            let person1 = {
+                name:"Aung Aung",
+                age:20,
+                gender:"male"
+            };
+
+            console.log(person1); //{name: 'Aung Aung', age: 20, gender: 'male'}
+            console.log(person1.name); //Aung Aung
+            console.log(person1['name']); //Aung Aung
+
+            person1.city = "Yangon";
+            console.log(person1); //{name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon'}age: 20city: "Yangon"gender: "male"name: "Aung Aung"[[Prototype]]: Object
+
+            let person2 = person1;
+            console.log(person2); ////{name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon'}age: 20city: "Yangon"gender: "male"name: "Aung Aung"[[Prototype]]: Object
+
+            person2.hobby = "sport";
+            person2.age = 30;
+            console.log(person1); //name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+            console.log(person2); //name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+
+
+            let person3 = Object.freeze(person1);
+            console.log(person3); //name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon', hobby: 'sport'}
+
+            person3.phone = "0911111";
+            person3.age = 40;
+            console.log(person1); //name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon', hobby: 'sport'}
+            console.log(person2);//name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon', hobby: 'sport'}
+            console.log(person3); //name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon', hobby: 'sport'}
+            console.log(person3.name); //Aung Aung
+            console.log(person3['name']); //Aung Aung
+
+
+            const employees = {
+                name: "yu yu",
+                position: "graphic designer",
+                salary: 500000
+            };
+
+            const {name,salary} = employees;
+            console.log(name); //yu yu
+            console.log(salary); //500000
+
+
+            const employers = {
+                fullname:"su su",
+                company:"abc co.ltd",
+                location:"yangon",
+                posts:{
+                    officestaff:{
+                        gender:"female",
+                        salary:600000
+                    },
+                    driver:{
+                        gender:"male",
+                        salary:300000
+                    }
+                },
+                links:{
+                    social:{
+                        gmail:"admin@abc.com",
+                        facebook:"https://facebook.com/abccompany"
+                    }
+                }
+            };
+
+
+            // console.log(employers); //teral.html:81 {fullname: 'su su', company: 'abc co.ltd', location: 'yangon', posts: {…}, links: {…}}
+            
+            const {fullname,company,posts} = employers;
+
+            console.log(fullname); // su su
+            console.log(company); //abc co.ltd
+            console.log(posts.officestaff.gender,posts['officestaff']['salary']);  //female 600000
+            console.log(posts.driver.gender,posts['driver']['salary']);  //male 300000
+
+            //  const {gmail,facebook} = employers.links.social;
+            //  console.log(gmail);
+            //  console.log(facebook);
+
+            //  =>Alias
+
+           const {gmail:letter,facebook:status} = employers.links.social;    
+            //  console.log(gmail); //error gmail is not defined
+            //  console.log(facebook); //error facebook is not defined
+           console.log(letter); //admin@abc.com
+           console.log(status); //https://facebook.com/abccompany
+
+           const configs = {
+              width:300,
+              color:"steelblue"
+           };
+
+           const {
+                width,
+                height=500,
+                color = "black",
+                margin = "10px"} = configs;
+           
+           console.log(width); //100
+           console.log(color); //steelblue
+           console.log(height); //500
+           console.log(margin); //10px
+
+           const {bg:background="white",p:padding="10px",flex:flexbox} = {bg:"black"};
+
+        //    console.log(bg); //error
+        //    console.lg(p);  //error
+        //    console.log(background); //black
+        //    console.log(padding); //10px
+        //   console.log(flex); //error
+        //   console.log(flexbox); //undefined
+
+
+
+
+        function exchangerate(amount){
+
+            const rates = {
+                mmk:amount * 3000,
+                thb:amount * 40,
+                sgd:amount * 1.35
+            };
+            
+            return rates;
+        }
+
+        const currency = exchangerate(10); 
+        console.log(currency); //{mmk: 30000, thb: 400, sgd: 13.5}
+        console.log(currency.mmk); //30000
+        console.log(currency.thb); //400
+     
+        const {mmk,thb,sgd} = exchangerate(10);
+        console.log(mmk);
+        console.log(thb);
+        console.log(sgd);
+
+       
+        let obj = {
+            total:1000,
+            tax:5,
+            servicefee:100
+        };
+
+        function grandtotal1(objval){
+            const result = objval.total+(objval.total/objval.tax)+objval.servicefee;
+            return result;
+        }
+
+        console.log(grandtotal1(obj)); //1300
+        // console.log(grandtotal1()); //error
+
+
+        function grandtotal2(objval={}){
+            const result = objval.total+(objval.total/objval.tax)+objval.servicefee;
+            return result;
+        }
+
+        console.log(grandtotal2()); //NaN
+
+        // const {total,tax,servicefee} = {total:2000,tax:5,servicefee:100}
+        // console.log(total);
+        // console.log(tax);
+        // console.log(servicefee);
+        function grandtotal3({total,tax,servicefee}){
+            const result = total+(total/tax)+servicefee;
+            return result;
+        }
+
+        console.log(grandtotal3({total:2000,tax:5,servicefee:100})); //2500
+        // console.log(grandtotal3(obj)); //1300
+        // console.log(grandtotal3({total:2000,servicefee:100})); //NaN
+
+
+
+        function grandtotal4({total=1000,tax=5,servicefee=100}){
+            const result = total+(total/tax)+servicefee;
+            return result;
+        }
+
+        console.log(grandtotal4({total:3000,tax:5,servicefee:100})); //3700
+        console.log(grandtotal4({total:3000,servicefee:200})); //3800
+        console.log(grandtotal4({servicefee:200})); //1400
+        // console.log(grandtotal4()); //error
+        console.log(grandtotal4({})); //1300
+
+       
+        function grandtotal5({total=1000,tax=5,servicefee=100}={}){
+            const result = total+(total/tax)+servicefee;
+            return result;
+        }
+
+        console.log(grandtotal5({total:3000,tax:5,servicefee:100})); //3700
+        console.log(grandtotal5({total:3000,servicefee:200})); //3800
+        console.log(grandtotal5()); //1300
+
+
+        function cal(num1=50){
+            let result = num1+10;
+            return result;
+        }
+
+        console.log(cal());
+
+
+        const item = "Redbull Energy Drink";
+        const type = "Can";
+        const iteminfo = {
+            item:item,
+            type,
+            myfun:function(){
+                return "hello world";
+            },
+            madeby(country){
+                return `This product is made by ${country}`;
+            }
+        };
+
+        console.log(iteminfo);
+        console.log(iteminfo.item);
+        console.log(iteminfo['type']);
+        console.log(iteminfo.myfun());
+        console.log(iteminfo.madeby('thailand'));
+
+
+
+
+        const name1 = "Aung Aung";
+        const name2 = "Su Su";
+        const title = "New Task";
+        const position = "Finance Officer";
+        const role = "Located";
+        const department = "Accounting Room";
+
+        const job = {
+            name:name1,
+            title:position
+        };
+
+        console.log(job); //{name: 'Aung Aung', title: 'Finance Officer'}
+        // console.log(job['Aung Aung']); //oki ,but don't do
+
+
+        const assigns = {};
+        assigns['fullname'] = name1;
+        assigns[title] = position;
+        assigns[role] = department;
+
+        console.log(assigns); //{fullname: 'Aung Aung', New Task: 'Finance Officer', Located: 'Accounting Room'}
+
+
+        const tasks = {
+            ['fullname']:name2,
+            [title]:position,
+            [role]:department,
+            [1+2+3]:'result'
+        };
+
+        console.log(tasks); 
+        console.log(tasks.fullname); //Su Su
+        // console.log(tasks.6); //error don't do
+        // console.log(tasks[6]); //result don't do
+
+        </script>
+    </body>
+</html>
+
+
+<!-- 26AA -->

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Class Inheritance</title>
+    </head>
+    <body>
+
+
+        <script type="text/javascript">
+
+            // =>Class Inheritance (Note : Extend data and methods from another class)
+
+            class Person{
+                constructor(firstname,lastname,city){
+                    this.firstname = firstname;
+                    this.lastname = lastname;
+                    this.location = city;
+                }
+
+                getfullname = title=>{
+                    return `${title}.${this.firstname} ${this.lastname}`;
+                }
+            }
+
+
+            class Position extends Person{
+                jobtitle = title=>{
+                    return `${title}`;
+                }
+            }
+
+            const obj1 = new Person("Aung","Tun Tun","Yangon");
+            console.log(obj1);
+            console.log(obj1.firstname,obj1.lastname);
+            console.log(obj1.location); //Yangon
+
+            // const obj2 = new Position();  
+            // console.log(obj2);
+            // console.log(obj2.firstname,obj2.lastname); //undefined undefined
+            // console.log(obj2.location);  //undefined
+            // console.log(obj2.jobtitle("Manager"));  //Manager
+
+            const obj2 = new Position("Yu Yu","Aye","Mandalay");  
+            console.log(obj2);
+            console.log(obj2.firstname,obj2.lastname); //Yu Yu Aye
+            console.log(obj2.location);  //Mandalay
+            console.log(obj2.jobtitle("Manager"));  //Manager
+
+            
+
+            class Car{
+                constructor(brand,color){
+                    this.brand = brand;
+                    this.color = color;
+                }
+            }
+
+            Car.prototype.summarize = function(){
+                return `Brand is ${this.brand} and color is ${this.color}`;
+            }
+
+            const obj3 = new Car("Toyota","white");
+            console.log(obj3);
+            console.log(obj3.brand);
+            console.log(obj3.color);
+            console.log(obj3.summarize()); //Brand is Toyota and color is white
+
+
+
+            // Super Constructor
+
+            class Phone{
+                constructor(brand){
+                    this.brand = brand;
+                }
+
+                madeby(val){
+                    return `${val} made`;
+                }
+            }
+
+
+            class Mobile extends Phone{
+
+                constructor(brand,network,price){
+                    super(brand);
+                    this.network = network;
+                    this.price = price;
+                }
+
+
+                color(val){
+                    return `${val} color`;
+                }
+            }
+
+            const obj4 = new Mobile("Sony","5G","USD2000");
+            console.log(obj4);
+            console.log(obj4.brand);
+            console.log(obj4.madeby("Japan"));
+            console.log(obj4.color("Titanium"));
+
+            console.log(obj4.network); //5G
+            console.log(obj4.price); //USD2000
+        </script> 
+
+    </body>
+</html>
+

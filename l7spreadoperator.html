@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spread Operator</title>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+             
+            //  Spread Operator
+
+            let val;
+            val = Math.max(1,3,5,7,9,11,13,15,17,19,-20,0);
+            console.log(val); //19
+
+            val = Math.min(1,3,5,7,9,11,13,15,17,19,-20,0);
+            console.log(val); //-20
+
+            val = [10,20,30,40,50];
+            console.log(Math.max(val)); //NaN
+            console.log(Math.min(val)); //NaN
+
+            console.log(Math.max(...val)); //50
+            console.log(Math.min(...val)); //10
+
+            function sumresult(num1,num2,num3){
+               return num1+num2+num3;
+            }
+
+            console.log(sumresult(1,2,3)); //6
+            console.log(sumresult([1,2,3])); //1,2,3undefinedundefined
+
+           
+            const numbers = [10,20,30];
+            console.log(sumresult(...numbers)); //60
+            console.log(sumresult.apply(null,numbers)); //60
+            
+
+            function getval(val1,val2,val3){
+                console.log("val1 result is = ",val1);
+                console.log("val2 result is = ",val2);
+                console.log("val3 result is = ",val3);
+            }
+
+            getval('su su','yu yu','nu nu'); //val1 result is =  su su val2 result is =  yu yu val3 result is =  nu nu
+            getval(['su su','yu yu','nu nu']); //val1 result is =  (3) ['su su', 'yu yu', 'nu nu']
+            getval(...['su su','yu yu','nu nu']); ////val1 result is =  su su val2 result is =  yu yu val3 result is =  nu nu
+            getval.apply(true,['su su','yu yu','nu nu']); ////val1 result is =  su su val2 result is =  yu yu val3 result is =  nu nu
+
+            
+
+            const color = "Red";
+            console.log(color); //Red
+            console.log(...color); // R e d
+
+            getval(color); //val1 result is =  Red val2 result is =  undefined val1 result is =  undefined
+            getval(...color); // val1 result is = R  val2 result is = e  val3 result is = d
+
+
+            console.log(...[color]); //Red
+            console.log(...['Red']); //Red
+            console.log(['Red','Green','Blue']); // ['Red', 'Green', 'Blue']
+            console.log(...['Red','Green','Blue']); //Red Green Blue
+
+            console.log(...color); //R e d
+            console.log([...color]); //(3) ['R', 'e', 'd']
+            console.log([...'Red']); //(3) ['R', 'e', 'd']
+
+            console.log(color.split(''));//(3) ['R', 'e', 'd']
+
+            
+            const phones = ["apple","oppo","vivo","samsung"];
+            const cars = ["toyato","suzuki","mazda"];
+            const computers = ["mac","aoc","acer"];
+
+            let myowns = [phones,cars,computers];
+            console.log(myowns); //(3) [Array(4), Array(3), Array(3)]
+
+            myowns = [...phones,...cars,...computers];
+            console.log(myowns); //["apple","oppo","vivo","samsung","toyato","suzuki","mazda","mac","aoc","acer"];
+            
+            
+
+            // Spread in Object
+            
+            const infos = {
+                name:"Honey Nway Oo",
+                gender:"Female",
+                age:22
+            };
+
+            const contacts = {
+                phone:"0911111",
+                city:"Yangon",
+                hascar:true
+            };
+
+            const profiles = {
+                nickname:"Honey",
+                age:20
+            };
+
+
+
+            let bios = {infos,contacts};
+            console.log(bios); //{infos : {...}, contacts: {...}}
+
+            bios = {...infos,...contacts}
+            console.log(bios); //{name: 'Honey Nway Oo', gender: 'Female', age: 22, phone: '0911111', city: 'Yangon', …}
+
+            bios = {...infos,...profiles};
+            console.log(bios); //{name: 'Honey Nway Oo', gender: 'Female', age: 20, nickname: 'Honey'}
+
+            bios = {...profiles,...infos};
+            console.log(bios); //{nickname: 'Honey', age: 22, name: 'Honey Nway Oo', gender: 'Female'}
+
+            bios = {...profiles,...infos,country:"Myanmar"};
+            console.log(bios); //{nickname: 'Honey', age: 22, name: 'Honey Nway Oo', gender: 'Female', country: 'Myanmar'}
+
+            bios = {...profiles,...infos,age:"18"};
+            console.log(bios);  //{nickname: 'Honey', age: '18', name: 'Honey Nway Oo', gender: 'Female'}
+
+            bios = {...profiles,...infos,..."Myanmar"};
+            console.log(bios); //{0: 'M', 1: 'y', 2: 'a', 3: 'n', 4: 'm', 5: 'a', 6: 'r', nickname: 'Honey', age: 22, name: 'Honey Nway Oo', gender: 'Female'}
+
+            
+
+
+            const students = [..."hello",{name:"aung aung"}];
+            console.log(students);
+
+            const persons = {
+                name:"Tun Tun",
+                gender:"Male",
+                age:22
+            };
+
+
+            const phone = "0911111";
+            const country = "Myanmar";
+            const key1 = "nickname";
+            const key2 = "favcolor";
+
+            const customers = {
+                ...persons,
+                hascar:true,
+                tel:phone,
+                country:country,
+                [key1]:"Mg Tun",
+                [key2]:"black"
+            }
+
+            console.log(customers);
+
+
+
+            const keyassign = (obj,key,val)=>{
+                
+                const getobj = obj;
+                getobj[key] = val;
+                console.log(getobj);  //{name: 'Tun Tun', gender: 'Male', age: 22, hascar: true, tel: '0911111', …}
+
+                const takeobj = {
+                    ...obj
+                };
+
+                takeobj[key] = val;
+                console.log(takeobj); //{name: 'Tun Tun', gender: 'Male', age: 22, hascar: true, tel: '0911111', …}
+
+                const setobj = {
+                    ...obj,
+                    [key]:val
+                }
+
+                console.log(setobj); //{name: 'Tun Tun', gender: 'Male', age: 22, hascar: true, tel: '0911111', …}
+
+
+            };
+
+
+            keyassign(customers,"job","Developer");
+
+
+        </script>
+
+
+
+    </body>
+</html>
+
+
+
+<!-- 25OP -->

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> this Keyword and strict mode</title>
+    </head>
+    <body>
+
+
+        <script type="text/javascript">
+
+
+            class Phone{
+                brand = function(){
+                    console.log(this);
+                }
+
+                color(){
+                    console.log(this);
+                }
+            }
+
+            const obj1 = new Phone();
+            console.log(obj1);
+
+
+
+            obj1.brand();
+            obj1.color(); //Phone {brand: ƒ}
+
+            // Note (this is no longer global window object)
+            const getbrand = obj1.brand;
+            getbrand(); //undefined
+
+
+            const getcolor = obj1.color;
+            getcolor(); //undefined
+
+
+        </script> 
+
+    </body>
+</html>
+

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Objects</title>
+    </head>
+    <body>
+
+
+        <script type="text/javascript">
+
+          const persons = {
+
+            // properties
+             name: 'aung aung',
+             age: 25,
+             address:{
+                street:"No.60,myittar street",
+                city:"Mandalay"
+             },
+
+            //  method
+             job:function(){
+                console.log("Frontend Web Designer");
+             }
+          };
+
+        //   we have 2way to create an object
+        //   (i)Factory Function
+        //  (ii)Constructor Function
+
+
+        //   (i) Factory Function
+
+          function info(val){
+             return {
+                // properties
+                name:val,
+
+                // method
+                job:function(){
+                    console.log(`${val} is Frontend Web Designer`);
+                }
+             }
+          }
+
+          const getinfo = info("aung aung");
+          console.log(getinfo); //{name: 'aung aung', job: ƒ}
+          console.log(getinfo.name); //aung aung
+          console.log(getinfo.job());
+
+
+          const getinfokeys = Object.keys(getinfo);
+          console.log(getinfokeys); //(2) ['name', 'job']
+
+
+        //   (ii) Constructor Function (the first letter should be uppercase)
+        //   Method 1
+         function Phone(brand){
+             this.brand = brand;
+             this.like = function(){
+                 console.log(`i love ${brand}`);
+             }
+
+             console.log('this value is ',this); //Note : if you run this inside of a object,will get currently object
+                                                //Note: if you run this inside of browser will get window object or window base (global object) 
+         }
+
+         const getobj = new Phone("iphone"); // new = {} Note : when we use (new operator) we will call new empty object
+
+         console.log(getobj);
+         console.log(getobj.brand); //phone
+         console.log(getobj.like()); //i love iphone
+
+         const getobjkeys = Object.keys(getobj);
+         console.log(getobjkeys); //(2) ['brand', 'like']
+
+        //  console.log(Phone("Sony")); // this value is  Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+
+         getobj.madeby = "china";
+         getobj['osversion'] = "IOS 18";
+         getobj.price = {pro:1000,promax:1500};
+
+         getobj.colors = function(){
+            console.log("All colors are same price");
+         }
+         console.log(getobj);
+
+
+
+        //  =>Delete Properties
+
+        delete getobj.madeby;
+        console.log(getobj);
+
+         //   (ii) Constructor Function (the first letter should be uppercase)
+        //   Method 2
+
+        const Computer = new Function("brand",`
+             this.brand = brand;
+             this.like = function(){
+                console.log('i love  computer');
+             }
+        `);
+
+        const getobj2 = new Computer("Dell");
+        
+        console.log(getobj2);
+        console.log(getobj2.brand); //Dell
+        console.log(getobj2.like()); //i love  computer
+
+
+
+        </script>
+
+    </body>
+</html>
+
+<!-- 10OBJ -->

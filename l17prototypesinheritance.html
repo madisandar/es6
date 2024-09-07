@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prototype Inheritance</title>
+    </head>
+    <body>
+
+
+        <script type="text/javascript">
+
+          function Vehicle(){
+
+          }
+
+          Vehicle.prototype.vancar = function(){
+            return "this is vancar";
+          }
+
+
+          function Bike(brand){
+            this.brand = brand;
+          }
+
+        //   Note:: in terminal = new Bike.prototype.constructor(); //result = Vehicle Base
+          Bike.prototype = Object.create(Vehicle.prototype);
+        //   Note:: Solved ,in terminal = new Bike.prototype.constructor(); //result = Vehicle Base
+          Bike.prototype.constructor = Bike;
+
+          Bike.prototype.ebike = function(){
+            return "this is ebike";
+          }
+
+          const vehicleobj = new Vehicle();
+          console.log(vehicleobj);
+          console.log(vehicleobj.vancar()); //this is vancar
+
+          const bikeobj = new Bike("marin");
+          console.log(bikeobj); 
+          console.log(bikeobj.brand); //marin
+          console.log(bikeobj.ebike()); //this is ebike
+
+          console.log(bikeobj.vancar()); //this is vancar
+
+
+        //   console.log(vehicleobj.brand); //undefined
+        //   console.log(vehicleobj.ebike()); //error
+
+        </script>
+
+    </body>
+</html>
+

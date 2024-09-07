@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Proxy Object</title>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+
+        //  =>proxy(target object,handler object)
+
+        let vehicle = {
+            brand:"toyota",
+            model:"land cruiser",
+            engine:"petrol"
+        };
+
+        // console.log(vehicle);
+
+        let getcar = new Proxy(vehicle,{
+
+            // trap method
+            // get(targetobj,properties name,proxy obj)          
+
+            get(target,prop,receiver){
+                if(prop === "brand"){
+                    return target[prop].toUpperCase();
+                }else if(prop === "model"){
+                    return target[prop].toUpperCase();
+                }else if(prop === 'receiver'){
+                    return receiver;
+                }else{
+                    return "access deny";
+                }
+            }
+        });
+
+
+
+
+        let obj1 = Object.create(getcar);
+
+        console.log(obj1); // {}
+
+        console.log(obj1.brand); // TOYOTA
+        console.log(obj1.model); // LAND CRUISER
+        console.log(obj1.receiver); // {}
+        console.log(obj1.engine); // access deny
+
+
+
+
+        // => private properties using the GET trap
+
+        let mobile = {
+            brand:"samsung",
+            model:"galaxy",
+            network:"4g",
+            _id:10011
+        };
+
+        let getphone = new Proxy(mobile,{
+            // trap method
+
+            get(target,prop,receiver){
+                
+                if(prop[0] === "_"){
+                    return "access denied";
+                }else{
+                    return target[prop].toUpperCase();
+                }
+            }
+        });
+
+
+        let obj2 = Object.create(getphone);
+        console.log(obj2); // {}
+
+        console.log(obj2.brand); // SAMSUNG
+        console.log(obj2.model); // GALAXY
+        console.log(obj2.network);  // 4G
+        console.log(obj2._id); // access denied
+
+
+        // => private properties using the SET trap
+
+        let gettelephone = new Proxy(mobile,{
+            // trap method
+
+            get(target,prop,receiver){
+                
+                if(prop[0] === "_"){
+                    return "access denied";
+                }else{
+                    return target[prop].toUpperCase();
+                }
+            },
+
+            set(target,prop,val,receiver){
+
+                if(prop[0] === "_"){
+                    throw "cannot set value for this prop";
+                }else{
+                    target[prop] = val;
+
+                }
+            },
+
+            has(target,prop){
+                if(prop[0] === "_"){
+                    return false;
+                }else{
+                    return Reflect.has(target,prop);
+                }
+            }
+
+        });
+
+
+        let obj3 = Object.create(gettelephone);
+        console.log(obj3); // {}
+
+        console.log(obj3.brand); // SAMSUNG
+        console.log(obj3.model); // GALAXY
+        console.log(obj3.network);  // 4G
+        console.log(obj3._id); // access denied
+
+        // obj3._id = 100; //Uncaught cannot set value for this prop
+
+        obj3.brand = "iPhone";
+        obj3.model = "iPhone 15pro";
+        obj3.network = "5g";
+
+        console.log(obj3.brand); // IPHONE
+        console.log(obj3.model); // IPHONE 15PRO
+        console.log(obj3.network);  // 5G
+        console.log(obj3._id); // access denied
+
+        // console.log("Network" in obj3); // false
+        console.log('network' in obj3); // true
+        console.log("_id" in obj3); //true     //false
+
+        // console.log(Reflect.has(obj3,"Network")); //false
+        console.log(Reflect.has(obj3,"network")); //true
+        console.log(Reflect.has(obj3,"_id")); //true //false
+
+
+        
+        let gethandphone = new Proxy(mobile,{
+
+            get(target,prop,receiver){
+                if(prop[0] === "_"){
+                    return "access denied";
+                }else{
+                    return target[prop];
+                }
+            },
+
+
+            set(target,prop,val,receiver){
+                if(prop[0] === "_"){
+                    throw "cannot set value for this prop";
+                }else{
+                    target[prop] = val.toUpperCase();
+                }
+            }
+        });
+
+        let obj4 = Object.create(gethandphone);
+        console.log(obj4.__proto__);
+        console.log(Object.getPrototypeOf(obj4)); //roxy(Object) {brand: 'iPhone', model: 'iPhone 15pro', network: '5g', _id: 10011}
+
+        console.log(obj4.brand); //iPhone
+        obj4.madeby = "china";
+        console.log(Object.getPrototypeOf(obj4)); //Proxy(Object) {brand: 'iPhone', model: 'iPhone 15pro', network: '5g', _id: 10011, madeby: 'CHINA'}
+        console.log(obj4.madeby); //CHINA
+
+
+
+
+        // l16prototype
+
+        let myproxobj = new Proxy({},{
+
+            // defineProperty(target,prop,descriptor){
+            //     return true;         // Proxy(Object) {}
+            // }
+
+            // defineProperty(target,prop,descriptor){
+            //     Reflect.defineProperty(target,prop,descriptor);
+            //     return true;         // Proxy(Object) {}
+            // }
+
+            defineProperty(target,prop,descriptor){
+
+                descriptor.value = "Have to say Goodbye";
+                descriptor.writable = true;
+                descriptor.enumerable = true;
+                // descriptor.configurable = false;
+                Reflect.defineProperty(target,prop,descriptor);
+                return true;         // 
+            }
+        });
+
+        myproxobj.greeting = "Welcome to our mobile technology";
+        console.log(myproxobj);
+
+        console.log(Object.getOwnPropertyDescriptors(myproxobj));
+
+
+
+    </script>
+
+
+    </body>
+</html>
+
+
+<!-- 7PO    -->
